@@ -1,0 +1,36 @@
+#---------------------------------------------------------------------------------
+# Clear the implicit built in rules
+#---------------------------------------------------------------------------------
+.SUFFIXES:
+#---------------------------------------------------------------------------------
+ifeq ($(strip $(PSL1GHT)),)
+$(error "Please set PSL1GHT in your environment. export PSL1GHT=<path>")
+endif
+
+include $(PSL1GHT)/ppu_rules
+
+LIBDIRS	:= $(PORTLIBS)
+
+CP= cp
+
+ICON0		:=	../ICON0.PNG
+
+TITLE		:=	PS3HATARI-1.6.1 PSL1GHTV2/RTYPE
+APPID		:=	PS3HATARI
+CONTENTID	:=	UP0001-$(APPID)_00-0000000000000000
+
+all:	hatari.pkg	
+
+hatari.pkg: hatari.self
+
+hatari.self: hatari.elf
+
+hatari.elf:		
+		$(MAKE)
+
+#---------------------------------------------------------------------------------
+clean:
+	@echo clean ...
+	@rm -fr build/ hatari.elf hatari.self hatari.fake.self hatari.gnpdrm.pkg hatari.pkg
+
+
